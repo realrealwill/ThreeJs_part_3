@@ -5,7 +5,7 @@ import Panel from './src/gui/Panel'
 
 // 3D scene initialization
 const app = new App()
-app.init()
+//app.init()
 
 // GLTF Loader
 const modelPath = './src/gltf/medieval_fantasy_book/scene.gltf'
