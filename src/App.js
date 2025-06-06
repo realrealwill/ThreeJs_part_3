@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 export default class App {
   // 存储实例
   static #instance = undefined
@@ -20,8 +21,22 @@ export default class App {
   get camera() {
     return this.#camera
   }
+
+  // 控制器
+  #control = undefined
+
+  get control() {
+    return this.#control
+  }
+
   // 背景颜色
   #backgroundColor = undefined
+  get backgroundColor() {
+    return this.#backgroundColor
+  }
+  set backgroundColor(color) {
+    this.#sceneSetBackground(color)
+  }
 
   // resize事件
   #resizeHandler = undefined
@@ -36,15 +51,20 @@ export default class App {
     0.1,
     1000
   )
+
+  // 创建摄像机控制器
+  #createCameraControls = () => new OrbitControls(this.#camera, this.#renderer.domElement)
+
   #getWindowAspectRatio = () => window.innerWidth / window.innerHeight
 
   #create = () => {
 
-    console.log('App Create');
+    //console.log('App Create');
     this.#rootDom = this.#createRootDom()
     this.#renderer = this.#createRenderer()
     this.#scene = this.#createScene()
     this.#camera = this.#createCamera()
+    this.#control = this.#createCameraControls()
   }
 
   //------------------***SETTING---------------------***//
@@ -57,15 +77,33 @@ export default class App {
     this.#scene.background = color ? new THREE.Color(color) : new THREE.Color('#000000')
     this.#backgroundColor = this.#scene.background.getStyle()
   }
+  get sceneSetBackground() {
+    this.#sceneSetBackground
+  }
+
+  #controlAddKeyControl = () => {
+    this.#control.listenToKeyEvents(window)
+    this.#control.keys = {  // 全部反着写因为设置时camera位置调试
+      LEFT: 'KeyD', //left arrow
+      UP: 'KeyS', // up arrow
+      RIGHT: 'KeyA', // right arrow
+      BOTTOM: 'KeyW' // down arrow
+    }
+  }
 
   #setting = () => {
-    console.log('App Setting');
+    //console.log('App Setting');
     this.#rendererSetPixelRatio()  // 设置像素比
     this.#rendererSetSize()  // 设置渲染器大小
     this.#rendererDomAppend()  // 将渲染器添加到根节点Dom中
     this.#cameraSetPosition()  // 设置相机位置
     this.#sceneSetBackground(0x50316e)  // 设置场景背景颜色
     this.#sceneSetBackground(0xdddddd)  // 设置场景背景颜色
+    this.#controlAddKeyControl()  // 添加键盘控制
+  }
+
+  get setting() {
+    return this.#setting
   }
 
   #rendererResizeUpdate = () => this.#rendererSetSize()
@@ -76,7 +114,7 @@ export default class App {
   }
 
   #update = () => {
-    console.log('App Update');
+    //console.log('App Update');
     this.#resizeHandler = () => {
       // 窗口大小改变时更新渲染器和相机的宽高比
       this.#rendererResizeUpdate()
@@ -86,18 +124,19 @@ export default class App {
   }
 
   #animate = () => {
-    console.log('App Animate');
+    //console.log('App Animate');
     requestAnimationFrame(this.#animate)
     this.#render()
   }
 
   #render = () => {
-    console.log('App Render');
+    //console.log('App Render');
+    this.#control.update()
     this.#renderer.render(this.#scene, this.#camera)
   }
 
   #init = () => {
-    console.log('App Init');
+    //console.log('App Init');
     // 创建关键资源
     this.#create()
     // 设置关键信息

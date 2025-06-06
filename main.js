@@ -11,5 +11,3 @@ const app = new App()
 const modelPath = 'gltf/medieval_fantasy_book/scene.gltf'
 const loader = new Loader(app, modelPath)
 
-// GUI Panel
-const panel = new Panel(app, loader)

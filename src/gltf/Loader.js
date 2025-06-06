@@ -1,7 +1,8 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 // import App from "../App";
-import * as UTILS from "../Utils";
+import * as UTILS from "@/Utils";
+import Panel from '@/gui/Panel'
 
 export default class Loader {
   // 存储渲染器
@@ -20,9 +21,20 @@ export default class Loader {
   #gltf = undefined;
   // 模型
   #model = undefined;
+  get model() {
+    return this.#model
+  }
 
   // 加载器
   #loader = new GLTFLoader()
+  get loader() {
+    return this.#loader
+  }
+
+  #panel = undefined;
+  get panel() {
+    return this.#panel
+  }
 
   #init = () => {
     //编解码
@@ -64,6 +76,8 @@ export default class Loader {
     this.#gltf = await this.#loadGltf()  // 异步加载给#gltf
     this.#model = this.#gltf.scene  // 将#gltf.scene赋值给#model
     this.#scene.add(this.#model)  // 将#model添加到场景中
+    // GUI Panel
+    this.#panel = new Panel(this.#app, this)
   }
 
   constructor(app, modelPath) {

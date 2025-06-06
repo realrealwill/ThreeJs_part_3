@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "dat.gui": "^0.7.9",
     "sass": "^1.89.1",
     "vite": "^6.3.5"
   },
