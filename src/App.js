@@ -52,7 +52,7 @@ export default class App {
   #rendererSetPixelRatio = () => this.#renderer.setPixelRatio(window.devicePixelRatio)
   #rendererSetSize = () => this.#renderer.setSize(window.innerWidth, window.innerHeight)
   #rendererDomAppend = () => this.#rootDom?.appendChild(this.#renderer.domElement)
-  #cameraSetPosition = () => this.#camera.position.z = 5
+  #cameraSetPosition = () => this.#camera.position.z = 100
   #sceneSetBackground = (color) => {
     this.#scene.background = color ? new THREE.Color(color) : new THREE.Color('#000000')
     this.#backgroundColor = this.#scene.background.getStyle()
@@ -65,6 +65,7 @@ export default class App {
     this.#rendererDomAppend()  // 将渲染器添加到根节点Dom中
     this.#cameraSetPosition()  // 设置相机位置
     this.#sceneSetBackground(0x50316e)  // 设置场景背景颜色
+    this.#sceneSetBackground(0xdddddd)  // 设置场景背景颜色
   }
 
   #rendererResizeUpdate = () => this.#rendererSetSize()

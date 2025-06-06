@@ -8,7 +8,7 @@ const app = new App()
 //app.init()
 
 // GLTF Loader
-const modelPath = './src/gltf/medieval_fantasy_book/scene.gltf'
+const modelPath = 'gltf/medieval_fantasy_book/scene.gltf'
 const loader = new Loader(app, modelPath)
 
 // GUI Panel
